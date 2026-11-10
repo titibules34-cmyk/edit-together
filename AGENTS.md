@@ -32,3 +32,4 @@ use the editor.
 ## Project rules
 
 - Site pictures are real files in `public/images/` referenced by plain `/images/...` paths, never `.asset.json` CDN pointers — why: `/__l5e/` CDN links only resolve on Lovable hosting, so pictures broke when the site was hosted elsewhere (e.g. Cloudflare). The leftover `src/assets/**/*.asset.json` files only keep the shared public links alive; the app does not use them.
+- Pictures needed instantly on the next page (e.g. the About Us background) are listed in `src/lib/preload-images.ts`, which warms the browser cache after any page loads — why: page switches should show the picture immediately instead of loading it.

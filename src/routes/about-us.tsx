@@ -20,7 +20,7 @@ const certDuns = "/images/certs/duns.png";
 const certDmca = "/images/certs/dmca.png";
 const certAcfeMember = "/images/certs/acfe-member.png";
 const certAuthorizeNet = "/images/certs/authorize-net.png";
-const worldMapBg = "/images/world-map-blue.png";
+import { ABOUT_BACKGROUND_IMAGE as worldMapBg } from "@/lib/preload-images";
 
 const certifications: [string, string][] = [
   [certAcfeCfe, "Certified Fraud Examiner"],
@@ -50,6 +50,7 @@ import { BrandLogo } from "@/components/BrandLogo";
 
 export const Route = createFileRoute("/about-us")({
   head: () => ({
+    links: [{ rel: "preload", as: "image", href: worldMapBg, type: "image/webp", fetchPriority: "high" }],
     meta: [
       { title: "About Us — Cyber Justice" },
       { name: "description", content: "Learn about Cyber Justice: evidence-led cyber intelligence, digital investigations and asset tracing." },
@@ -112,7 +113,7 @@ function AboutUs() {
         @media (prefers-reduced-motion: reduce) { .about-rise,.about-orb,.about-float { animation:none; opacity:1; } .about-word { animation:none; opacity:0; } .about-word:first-child { opacity:1; } }
       `}</style>
       <div className="pointer-events-none fixed inset-0 -z-10">
-        <img src={worldMapBg} alt="" aria-hidden="true" className="h-full w-full object-cover" />
+        <img src={worldMapBg} alt="" aria-hidden="true" width={1672} height={941} loading="eager" fetchPriority="high" decoding="sync" className="h-full w-full object-cover" />
         <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(6,22,52,.62)_0%,rgba(8,28,64,.72)_55%,rgba(6,20,48,.82)_100%)]" />
       </div>
       <div className="about-grid pointer-events-none absolute inset-0 -z-10" />
