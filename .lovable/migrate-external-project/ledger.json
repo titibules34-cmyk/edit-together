@@ -1,0 +1,6 @@
+[
+ {"capability":"code","source":"github titibules34-cmyk/chaintrace-recovery-compass-a36ee4e4","outcome":"migrate","status":"verified","next_action":"none"},
+ {"capability":"assets","source":"repo files + 2 CDN asset pointers","outcome":"migrate","status":"verified","next_action":"none"},
+ {"capability":"database/auth/records","source":"none detected","outcome":"not applicable","status":"verified","next_action":"none"},
+ {"capability":"contact form","source":"mailto in chat assistant","outcome":"preserve","status":"verified","next_action":"none"}
+]
