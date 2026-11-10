@@ -43,6 +43,8 @@ async function handleContactSubmission(request: Request, env: WorkerEnv): Promis
     return jsonResponse({ error: "Please provide your name, a valid email address and a message." }, 400);
   }
   if (!env.RESEND_API_KEY) {
+    // Never log the secret or any enquiry data; this confirms only that the binding is missing.
+    console.error("Contact form configuration error", { resendApiKeyAvailable: false });
     return jsonResponse({ error: "The contact service is not configured yet. Please email info@cyberjustice.uk directly." }, 503);
   }
 
@@ -75,7 +77,11 @@ async function handleContactSubmission(request: Request, env: WorkerEnv): Promis
       return jsonResponse({ error: "We couldn't send your enquiry just now. Please email info@cyberjustice.uk directly." }, 502);
     }
     return jsonResponse({ ok: "Message sent." });
-  } catch {
+  } catch (error) {
+    const safeError = error instanceof Error
+      ? { errorName: error.name, errorMessage: error.message.slice(0, 300) }
+      : { errorName: "UnknownError" };
+    console.error("Contact form request to Resend threw an exception", safeError);
     return jsonResponse({ error: "We couldn't send your enquiry just now. Please email info@cyberjustice.uk directly." }, 502);
   }
 }
