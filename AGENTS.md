@@ -31,4 +31,4 @@ use the editor.
 
 ## Project rules
 
-- All site pictures live on the Lovable CDN as `.asset.json` pointers (use `.url`), not as files in `public/` or bundled imports — why: each picture keeps a permanent public link that outside tools can open.
+- Site pictures are real files in `public/images/` referenced by plain `/images/...` paths, never `.asset.json` CDN pointers — why: `/__l5e/` CDN links only resolve on Lovable hosting, so pictures broke when the site was hosted elsewhere (e.g. Cloudflare). The leftover `src/assets/**/*.asset.json` files only keep the shared public links alive; the app does not use them.
