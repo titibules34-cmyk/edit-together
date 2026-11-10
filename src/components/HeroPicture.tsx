@@ -1,7 +1,7 @@
-import cyberJusticeHeroImg from "@/assets/cyber-justice-hero.webp.asset.json";
-import mobileHeroImg from "@/assets/lady-justice-mobile.webp.asset.json";
+const cyberJusticeHeroImg = "/images/cyber-justice-hero.webp";
+const mobileHeroImg = "/images/lady-justice-mobile.webp";
 
-const DESKTOP_HERO = cyberJusticeHeroImg.url;
+const DESKTOP_HERO = cyberJusticeHeroImg;
 
 /** Lady Justice hero photo: a tall portrait crop on phones, the wide original on larger screens. */
 export function HeroPicture({
@@ -16,7 +16,7 @@ export function HeroPicture({
   return (
     // `contents` keeps the <img> positioned against the hero section; data-reveal opts out of the scroll animation.
     <picture className="contents" data-reveal="skip">
-      <source media="(max-width: 639px)" srcSet={mobileHeroImg.url} />
+      <source media="(max-width: 639px)" srcSet={mobileHeroImg} />
       <img
         src={DESKTOP_HERO}
         alt={alt}

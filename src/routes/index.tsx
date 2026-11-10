@@ -1,55 +1,55 @@
-import assetTracingImg from "@/assets/asset-tracing.png.asset.json";
-import cryptoTracingImg from "@/assets/crypto-tracing.png.asset.json";
-import cyberIntelIconImg from "@/assets/cyber-intel-icon.png.asset.json";
-import cyberInvestigationIconImg from "@/assets/cyber-investigation-icon.png.asset.json";
+const assetTracingImg = "/images/asset-tracing.png";
+const cryptoTracingImg = "/images/crypto-tracing.png";
+const cyberIntelIconImg = "/images/cyber-intel-icon.png";
+const cyberInvestigationIconImg = "/images/cyber-investigation-icon.png";
 import { useState } from "react";
 
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { HeroPicture } from "@/components/HeroPicture";
 import { Globe, Users, Monitor, DollarSign, Code2, BarChart3, MapPin, Lock, ShieldCheck, ArrowRight, Phone, Clock, Send, ChevronDown, Menu, X } from "lucide-react";
-import certAcfeCfe from "@/assets/certs/acfe-cfe.png.asset.json";
-import certTali from "@/assets/certs/tali.png.asset.json";
-import certCyberExpert from "@/assets/certs/cyber-expert.png.asset.json";
-import certWad from "@/assets/certs/wad.png.asset.json";
-import certCtce from "@/assets/certs/ctce.png.asset.json";
-import certSectigo from "@/assets/certs/sectigo.png.asset.json";
-import certBig from "@/assets/certs/big.png.asset.json";
-import certGba from "@/assets/certs/gba.png.asset.json";
-import certGasa from "@/assets/certs/gasa.png.asset.json";
-import certCompliassure from "@/assets/certs/compliassure.png.asset.json";
-import certChainalysisReactor from "@/assets/certs/chainalysis-reactor.png.asset.json";
-import certIacis from "@/assets/certs/iacis.png.asset.json";
-import certBbb from "@/assets/certs/bbb.png.asset.json";
-import certFali from "@/assets/certs/fali.png.asset.json";
-import certChainalysisSpecialist from "@/assets/certs/chainalysis-specialist.png.asset.json";
-import certTrmAci from "@/assets/certs/trm-aci.png.asset.json";
-import certDuns from "@/assets/certs/duns.png.asset.json";
-import certDmca from "@/assets/certs/dmca.png.asset.json";
-import certAcfeMember from "@/assets/certs/acfe-member.png.asset.json";
-import certAuthorizeNet from "@/assets/certs/authorize-net.png.asset.json";
+const certAcfeCfe = "/images/certs/acfe-cfe.png";
+const certTali = "/images/certs/tali.png";
+const certCyberExpert = "/images/certs/cyber-expert.png";
+const certWad = "/images/certs/wad.png";
+const certCtce = "/images/certs/ctce.png";
+const certSectigo = "/images/certs/sectigo.png";
+const certBig = "/images/certs/big.png";
+const certGba = "/images/certs/gba.png";
+const certGasa = "/images/certs/gasa.png";
+const certCompliassure = "/images/certs/compliassure.png";
+const certChainalysisReactor = "/images/certs/chainalysis-reactor.png";
+const certIacis = "/images/certs/iacis.png";
+const certBbb = "/images/certs/bbb.png";
+const certFali = "/images/certs/fali.png";
+const certChainalysisSpecialist = "/images/certs/chainalysis-specialist.png";
+const certTrmAci = "/images/certs/trm-aci.png";
+const certDuns = "/images/certs/duns.png";
+const certDmca = "/images/certs/dmca.png";
+const certAcfeMember = "/images/certs/acfe-member.png";
+const certAuthorizeNet = "/images/certs/authorize-net.png";
 import { BrandLogo } from "@/components/BrandLogo";
 
 const certifications: [string, string][] = [
-  [certAcfeCfe.url, "Certified Fraud Examiner"],
-  [certTali.url, "Texas Association of Licensed Investigators"],
-  [certCyberExpert.url, "Board Certified Cyber Investigations Expert"],
-  [certWad.url, "World Association of Detectives"],
-  [certCtce.url, "Certified Cryptocurrency Expert"],
-  [certSectigo.url, "Secured by Sectigo"],
-  [certBig.url, "Blockchain Intelligence Group"],
-  [certGba.url, "Government Blockchain Association"],
-  [certGasa.url, "Global Anti-Scam Alliance"],
-  [certCompliassure.url, "CompliAssure Secured"],
-  [certChainalysisReactor.url, "Chainalysis Reactor Certification"],
-  [certIacis.url, "International Association of Computer Investigative Specialists"],
-  [certBbb.url, "BBB Accredited Business — A+ Rating"],
-  [certFali.url, "Florida Association of Licensed Investigators"],
-  [certChainalysisSpecialist.url, "Chainalysis Investigation Specialist Certification"],
-  [certTrmAci.url, "TRM Anti-Money Laundering Cryptoasset Investigator"],
-  [certDuns.url, "D-U-N-S Registered"],
-  [certDmca.url, "Protected by DMCA"],
-  [certAcfeMember.url, "ACFE Associate Member"],
-  [certAuthorizeNet.url, "Authorize.Net Verified Merchant"],
+  [certAcfeCfe, "Certified Fraud Examiner"],
+  [certTali, "Texas Association of Licensed Investigators"],
+  [certCyberExpert, "Board Certified Cyber Investigations Expert"],
+  [certWad, "World Association of Detectives"],
+  [certCtce, "Certified Cryptocurrency Expert"],
+  [certSectigo, "Secured by Sectigo"],
+  [certBig, "Blockchain Intelligence Group"],
+  [certGba, "Government Blockchain Association"],
+  [certGasa, "Global Anti-Scam Alliance"],
+  [certCompliassure, "CompliAssure Secured"],
+  [certChainalysisReactor, "Chainalysis Reactor Certification"],
+  [certIacis, "International Association of Computer Investigative Specialists"],
+  [certBbb, "BBB Accredited Business — A+ Rating"],
+  [certFali, "Florida Association of Licensed Investigators"],
+  [certChainalysisSpecialist, "Chainalysis Investigation Specialist Certification"],
+  [certTrmAci, "TRM Anti-Money Laundering Cryptoasset Investigator"],
+  [certDuns, "D-U-N-S Registered"],
+  [certDmca, "Protected by DMCA"],
+  [certAcfeMember, "ACFE Associate Member"],
+  [certAuthorizeNet, "Authorize.Net Verified Merchant"],
 ];
 
 export const Route = createFileRoute("/")({
@@ -78,25 +78,25 @@ const services = [
     "Asset Recovery",
     "Asset Tracing and Investigations",
     "Specializing in Asset Tracing, Crypto Recovery Services offers tailored plans to aid law enforcement and law firms. We provide key evidence for successful fund recovery.",
-    assetTracingImg.url,
+    assetTracingImg,
   ],
   [
     "OSINT & HUMINT",
     "Cyber Intelligence Services",
     "Leveraging diverse techniques like Open Source Intelligence, our team delivers actionable evidence. This service augments the capabilities of law enforcement and legal professionals.",
-    cyberIntelIconImg.url,
+    cyberIntelIconImg,
   ],
   [
     "LEO Certified",
     "Cyber Investigation Team",
     "Our team of U.S.-Certified Cyber Investigators conducts global inquiries, spanning 6 continents. We are adept at gathering essential evidence for varied cases.",
-    cyberInvestigationIconImg.url,
+    cyberInvestigationIconImg,
   ],
   [
     "On-Chain Forensics",
     "Cryptocurrency Tracing",
     "We excel at tracking most types of cryptocurrencies and assets. If digital assets are transferred, we have the capability to trace and follow their movement.",
-    cryptoTracingImg.url,
+    cryptoTracingImg,
   ],
 ];
 
