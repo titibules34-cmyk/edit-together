@@ -2,7 +2,7 @@ const assetTracingImg = "/images/asset-tracing.png";
 const cryptoTracingImg = "/images/crypto-tracing.png";
 const cyberIntelIconImg = "/images/cyber-intel-icon.png";
 const cyberInvestigationIconImg = "/images/cyber-investigation-icon.png";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { HeroPicture } from "@/components/HeroPicture";
@@ -208,6 +208,28 @@ const contactCards = [
 function Index() {
   const [servicesOpen, setServicesOpen] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [heroWord, setHeroWord] = useState("Recovery");
+  const [heroWordVisible, setHeroWordVisible] = useState(true);
+
+  useEffect(() => {
+    const rotatingWords = ["Recovery", "Intelligence", "Tracing"];
+    let currentIndex = 0;
+    let revealTimeout: ReturnType<typeof setTimeout> | undefined;
+
+    const rotationInterval = setInterval(() => {
+      setHeroWordVisible(false);
+      revealTimeout = setTimeout(() => {
+        currentIndex = (currentIndex + 1) % rotatingWords.length;
+        setHeroWord(rotatingWords[currentIndex]);
+        setHeroWordVisible(true);
+      }, 250);
+    }, 2600);
+
+    return () => {
+      clearInterval(rotationInterval);
+      if (revealTimeout) clearTimeout(revealTimeout);
+    };
+  }, []);
 
   return (
     <main className="min-h-screen">
@@ -382,7 +404,14 @@ function Index() {
           <p className="eyebrow">Recovery forensics & investigations</p>
           <h1 className="mt-4 max-w-2xl text-4xl font-extrabold leading-tight sm:text-6xl">
             Actionable{" "}
-            <span className="inline-block text-accent">digital</span>
+            <span
+              className={`inline-block text-accent transition-all duration-300 motion-reduce:transition-none ${
+                heroWordVisible ? "translate-y-0 opacity-100" : "translate-y-2 opacity-0"
+              }`}
+              aria-live="polite"
+            >
+              {heroWord}
+            </span>
             <br />
             solutions.
           </h1>
