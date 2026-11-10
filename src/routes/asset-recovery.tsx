@@ -1,5 +1,5 @@
-import assetTracingImg from "@/assets/asset-tracing.png.asset.json";
-import cryptoTracingImg from "@/assets/crypto-tracing.png.asset.json";
+const assetTracingImg = "/images/asset-tracing.png";
+const cryptoTracingImg = "/images/crypto-tracing.png";
 import { HeroPicture } from "@/components/HeroPicture";
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { BrandLogo } from "@/components/BrandLogo";
@@ -28,12 +28,12 @@ export const Route = createFileRoute("/asset-recovery")({
 const methods = [
   {
     title: "Bank Wire Tracing",
-    img: assetTracingImg.url,
+    img: assetTracingImg,
     text: "Our team of international banking experts offers a service to accurately trace the movement of funds. Each jurisdiction presents its unique challenges, but with our innovative fund tracing service and a network of lawyers worldwide, Crypto Recovery Services can assist not only with your local bank but also apply pressure on the beneficiary bank and company that received the funds.",
   },
   {
     title: "Cryptocurrency Tracing",
-    img: cryptoTracingImg.url,
+    img: cryptoTracingImg,
     text: "We trace and provide evidence for a range of Cryptocurrencies, including Bitcoin and Ethereum, among others. Our Investigations Team tracks down the owners once the Cryptocurrency is traced to the last Wallet before being exchanged for Fiat Currency, thereby enabling the recovery of your funds.",
   },
 ];

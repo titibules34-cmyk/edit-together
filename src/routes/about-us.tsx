@@ -1,48 +1,48 @@
 import { useEffect, useState } from "react";
 import { createFileRoute, Link } from "@tanstack/react-router";
-import certAcfeCfe from "@/assets/certs/acfe-cfe.png.asset.json";
-import certTali from "@/assets/certs/tali.png.asset.json";
-import certCyberExpert from "@/assets/certs/cyber-expert.png.asset.json";
-import certWad from "@/assets/certs/wad.png.asset.json";
-import certCtce from "@/assets/certs/ctce.png.asset.json";
-import certSectigo from "@/assets/certs/sectigo.png.asset.json";
-import certBig from "@/assets/certs/big.png.asset.json";
-import certGba from "@/assets/certs/gba.png.asset.json";
-import certGasa from "@/assets/certs/gasa.png.asset.json";
-import certCompliassure from "@/assets/certs/compliassure.png.asset.json";
-import certChainalysisReactor from "@/assets/certs/chainalysis-reactor.png.asset.json";
-import certIacis from "@/assets/certs/iacis.png.asset.json";
-import certBbb from "@/assets/certs/bbb.png.asset.json";
-import certFali from "@/assets/certs/fali.png.asset.json";
-import certChainalysisSpecialist from "@/assets/certs/chainalysis-specialist.png.asset.json";
-import certTrmAci from "@/assets/certs/trm-aci.png.asset.json";
-import certDuns from "@/assets/certs/duns.png.asset.json";
-import certDmca from "@/assets/certs/dmca.png.asset.json";
-import certAcfeMember from "@/assets/certs/acfe-member.png.asset.json";
-import certAuthorizeNet from "@/assets/certs/authorize-net.png.asset.json";
-import worldMapBg from "@/assets/world-map-blue.png.asset.json";
+const certAcfeCfe = "/images/certs/acfe-cfe.png";
+const certTali = "/images/certs/tali.png";
+const certCyberExpert = "/images/certs/cyber-expert.png";
+const certWad = "/images/certs/wad.png";
+const certCtce = "/images/certs/ctce.png";
+const certSectigo = "/images/certs/sectigo.png";
+const certBig = "/images/certs/big.png";
+const certGba = "/images/certs/gba.png";
+const certGasa = "/images/certs/gasa.png";
+const certCompliassure = "/images/certs/compliassure.png";
+const certChainalysisReactor = "/images/certs/chainalysis-reactor.png";
+const certIacis = "/images/certs/iacis.png";
+const certBbb = "/images/certs/bbb.png";
+const certFali = "/images/certs/fali.png";
+const certChainalysisSpecialist = "/images/certs/chainalysis-specialist.png";
+const certTrmAci = "/images/certs/trm-aci.png";
+const certDuns = "/images/certs/duns.png";
+const certDmca = "/images/certs/dmca.png";
+const certAcfeMember = "/images/certs/acfe-member.png";
+const certAuthorizeNet = "/images/certs/authorize-net.png";
+const worldMapBg = "/images/world-map-blue.png";
 
 const certifications: [string, string][] = [
-  [certAcfeCfe.url, "Certified Fraud Examiner"],
-  [certTali.url, "Texas Association of Licensed Investigators"],
-  [certCyberExpert.url, "Board Certified Cyber Investigations Expert"],
-  [certWad.url, "World Association of Detectives"],
-  [certCtce.url, "Certified Cryptocurrency Expert"],
-  [certSectigo.url, "Secured by Sectigo"],
-  [certBig.url, "Blockchain Intelligence Group"],
-  [certGba.url, "Government Blockchain Association"],
-  [certGasa.url, "Global Anti-Scam Alliance"],
-  [certCompliassure.url, "CompliAssure Secured"],
-  [certChainalysisReactor.url, "Chainalysis Reactor Certification"],
-  [certIacis.url, "International Association of Computer Investigative Specialists"],
-  [certBbb.url, "BBB Accredited Business — A+ Rating"],
-  [certFali.url, "Florida Association of Licensed Investigators"],
-  [certChainalysisSpecialist.url, "Chainalysis Investigation Specialist Certification"],
-  [certTrmAci.url, "TRM Anti-Money Laundering Cryptoasset Investigator"],
-  [certDuns.url, "D-U-N-S Registered"],
-  [certDmca.url, "Protected by DMCA"],
-  [certAcfeMember.url, "ACFE Associate Member"],
-  [certAuthorizeNet.url, "Authorize.Net Verified Merchant"],
+  [certAcfeCfe, "Certified Fraud Examiner"],
+  [certTali, "Texas Association of Licensed Investigators"],
+  [certCyberExpert, "Board Certified Cyber Investigations Expert"],
+  [certWad, "World Association of Detectives"],
+  [certCtce, "Certified Cryptocurrency Expert"],
+  [certSectigo, "Secured by Sectigo"],
+  [certBig, "Blockchain Intelligence Group"],
+  [certGba, "Government Blockchain Association"],
+  [certGasa, "Global Anti-Scam Alliance"],
+  [certCompliassure, "CompliAssure Secured"],
+  [certChainalysisReactor, "Chainalysis Reactor Certification"],
+  [certIacis, "International Association of Computer Investigative Specialists"],
+  [certBbb, "BBB Accredited Business — A+ Rating"],
+  [certFali, "Florida Association of Licensed Investigators"],
+  [certChainalysisSpecialist, "Chainalysis Investigation Specialist Certification"],
+  [certTrmAci, "TRM Anti-Money Laundering Cryptoasset Investigator"],
+  [certDuns, "D-U-N-S Registered"],
+  [certDmca, "Protected by DMCA"],
+  [certAcfeMember, "ACFE Associate Member"],
+  [certAuthorizeNet, "Authorize.Net Verified Merchant"],
 ];
 
 import { ArrowLeft, ArrowRight, Scale, ShieldCheck, Search, Network, FileCheck2, Globe, DollarSign, ScanSearch, Radar, LockKeyhole, Crosshair, RotateCcw, SearchCheck, BadgeCheck } from "lucide-react";
@@ -112,7 +112,7 @@ function AboutUs() {
         @media (prefers-reduced-motion: reduce) { .about-rise,.about-orb,.about-float { animation:none; opacity:1; } .about-word { animation:none; opacity:0; } .about-word:first-child { opacity:1; } }
       `}</style>
       <div className="pointer-events-none fixed inset-0 -z-10">
-        <img src={worldMapBg.url} alt="" aria-hidden="true" className="h-full w-full object-cover" />
+        <img src={worldMapBg} alt="" aria-hidden="true" className="h-full w-full object-cover" />
         <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(6,22,52,.62)_0%,rgba(8,28,64,.72)_55%,rgba(6,20,48,.82)_100%)]" />
       </div>
       <div className="about-grid pointer-events-none absolute inset-0 -z-10" />
