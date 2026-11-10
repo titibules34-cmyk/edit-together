@@ -12,6 +12,7 @@ import { useEffect, useState, type ReactNode } from "react";
 
 import appCss from "../styles.css?url";
 import { useScrollReveal } from "../hooks/use-scroll-reveal";
+import { useWarmImageCache } from "../lib/preload-images";
 import { reportLovableError } from "../lib/lovable-error-reporting";
 
 function NotFoundComponent() {
@@ -364,6 +365,7 @@ function FloatingCJBot() {
 function RootComponent() {
   const { queryClient } = Route.useRouteContext();
   useScrollReveal();
+  useWarmImageCache();
 
   return (
     <QueryClientProvider client={queryClient}>
