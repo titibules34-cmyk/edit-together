@@ -6,6 +6,7 @@ import { useEffect, useState } from "react";
 
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { HeroPicture } from "@/components/HeroPicture";
+import { isSpam, readContactFields, sendContactEnquiry, validateContact } from "@/lib/contact-form";
 import { Globe, Users, Monitor, DollarSign, Code2, BarChart3, MapPin, Lock, ShieldCheck, ArrowRight, Phone, Clock, Send, ChevronDown, Menu, X } from "lucide-react";
 const certAcfeCfe = "/images/certs/acfe-cfe.png";
 const certTali = "/images/certs/tali.png";
