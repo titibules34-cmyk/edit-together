@@ -210,6 +210,7 @@ function Index() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [heroWord, setHeroWord] = useState("Recovery");
   const [heroWordVisible, setHeroWordVisible] = useState(true);
+  const [contactStatus, setContactStatus] = useState<"idle" | "sending" | "success" | "error">("idle");
 
   useEffect(() => {
     const rotatingWords = ["Recovery", "Intelligence", "Tracing", "Digital"];
@@ -610,21 +611,25 @@ function Index() {
             </p>
             <form
               className="mt-6 flex flex-col gap-4"
-              onSubmit={(e) => {
+              onSubmit={async (e) => {
                 e.preventDefault();
-                const data = new FormData(e.currentTarget);
-                const subject = `Case inquiry: ${data.get("subject") || "Confidential consultation"}`;
-                const body = [
-                  `Name: ${data.get("name")}`,
-                  `Email: ${data.get("email")}`,
-                  `Phone: ${data.get("phone")}`,
-                  "",
-                  String(data.get("message") || ""),
-                ].join("\n");
-                window.location.href = `mailto:${CONTACT_EMAIL}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+                const form = e.currentTarget;
+                setContactStatus("sending");
+                try {
+                  const response = await fetch("/api/contact", {
+                    method: "POST",
+                    headers: { "content-type": "application/json" },
+                    body: JSON.stringify(Object.fromEntries(new FormData(form).entries())),
+                  });
+                  if (!response.ok) throw new Error("Submission failed");
+                  form.reset();
+                  setContactStatus("success");
+                } catch {
+                  setContactStatus("error");
+                }
               }}
             >
-              <div className="grid gap-4 sm:grid-cols-2">
+              <input name="website" type="text" tabIndex={-1} autoComplete="off" aria-hidden="true" className="absolute -left-[10000px] h-px w-px overflow-hidden" />\n              <div className="grid gap-4 sm:grid-cols-2">
                 <label className="flex flex-col gap-1.5 text-sm font-semibold">
                   Full Name
                   <input name="name" required placeholder="John Doe" className="rounded-lg border border-input bg-background px-3.5 py-2.5 text-sm font-normal placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-ring" />
@@ -646,10 +651,12 @@ function Index() {
                 Case Overview / Message
                 <textarea name="message" required rows={5} placeholder="Please provide relevant transaction hashes, dates, or details (do not include private keys)..." className="resize-y rounded-lg border border-input bg-background px-3.5 py-2.5 text-sm font-normal placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-ring" />
               </label>
-              <button type="submit" className="mt-1 inline-flex items-center justify-center gap-2 rounded-lg bg-primary px-6 py-3.5 text-sm font-semibold text-primary-foreground shadow-glow transition hover:opacity-90">
-                Send Message
+              <button type="submit" disabled={contactStatus === "sending"} className="mt-1 inline-flex items-center justify-center gap-2 rounded-lg bg-primary px-6 py-3.5 text-sm font-semibold text-primary-foreground shadow-glow transition hover:opacity-90 disabled:cursor-wait disabled:opacity-60">
+                {contactStatus === "sending" ? "Sending..." : "Send Message"}
                 <Send className="h-4 w-4" aria-hidden="true" />
               </button>
+              {contactStatus === "success" && <p role="status" className="text-center text-sm text-emerald-600">Thank you. Your enquiry has been sent to our team.</p>}
+              {contactStatus === "error" && <p role="alert" className="text-center text-sm text-red-500">We couldn't send your enquiry. Please email info@cyberjustice.uk directly.</p>}
               <p className="text-center text-xs text-muted-foreground">
                 Prefer email? Write to us directly at{" "}
                 <a href={`mailto:${CONTACT_EMAIL}`} className="font-semibold text-accent hover:underline">
