@@ -45,7 +45,7 @@ bun run deploy:workers
 
 ### Automatic GitHub deployment
 
-The `.github/workflows/deploy-cloudflare-workers.yml` workflow runs tests and builds on pushes to `main`. To enable automatic deployment, add these repository Actions secrets:
+The `.github/workflows/deploy-cloudflare-workers.yml` workflow runs tests and builds on pull requests and pushes to `main`. To enable automatic deployment, add these repository Actions secrets:
 
 - `CLOUDFLARE_API_TOKEN`: an API token with permission to deploy Workers Scripts for the target account.
 - `CLOUDFLARE_ACCOUNT_ID`: the Cloudflare account ID.
