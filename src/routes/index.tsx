@@ -1,3 +1,7 @@
+import assetTracingImg from "@/assets/asset-tracing.png.asset.json";
+import cryptoTracingImg from "@/assets/crypto-tracing.png.asset.json";
+import cyberIntelIconImg from "@/assets/cyber-intel-icon.png.asset.json";
+import cyberInvestigationIconImg from "@/assets/cyber-investigation-icon.png.asset.json";
 import { useState } from "react";
 
 import { createFileRoute, Link } from "@tanstack/react-router";
@@ -74,25 +78,25 @@ const services = [
     "Asset Recovery",
     "Asset Tracing and Investigations",
     "Specializing in Asset Tracing, Crypto Recovery Services offers tailored plans to aid law enforcement and law firms. We provide key evidence for successful fund recovery.",
-    "/assets/asset-tracing.png",
+    assetTracingImg.url,
   ],
   [
     "OSINT & HUMINT",
     "Cyber Intelligence Services",
     "Leveraging diverse techniques like Open Source Intelligence, our team delivers actionable evidence. This service augments the capabilities of law enforcement and legal professionals.",
-    "/assets/cyber-intel-icon.png",
+    cyberIntelIconImg.url,
   ],
   [
     "LEO Certified",
     "Cyber Investigation Team",
     "Our team of U.S.-Certified Cyber Investigators conducts global inquiries, spanning 6 continents. We are adept at gathering essential evidence for varied cases.",
-    "/assets/cyber-investigation-icon.png",
+    cyberInvestigationIconImg.url,
   ],
   [
     "On-Chain Forensics",
     "Cryptocurrency Tracing",
     "We excel at tracking most types of cryptocurrencies and assets. If digital assets are transferred, we have the capability to trace and follow their movement.",
-    "/assets/crypto-tracing.png",
+    cryptoTracingImg.url,
   ],
 ];
 
