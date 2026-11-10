@@ -212,7 +212,7 @@ function Index() {
   const [heroWordVisible, setHeroWordVisible] = useState(true);
 
   useEffect(() => {
-    const rotatingWords = ["Recovery", "Intelligence", "Tracing"];
+    const rotatingWords = ["Recovery", "Intelligence", "Tracing", "Digital"];
     let currentIndex = 0;
     let revealTimeout: ReturnType<typeof setTimeout> | undefined;
 
