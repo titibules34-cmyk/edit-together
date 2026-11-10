@@ -615,13 +615,11 @@ function Index() {
                 e.preventDefault();
                 const form = e.currentTarget;
                 setContactStatus("sending");
+                const fields = readContactFields(new FormData(form));
+                if (isSpam(fields)) { form.reset(); setContactStatus("success"); return; }
+                if (validateContact(fields)) { setContactStatus("error"); return; }
                 try {
-                  const response = await fetch("/api/contact", {
-                    method: "POST",
-                    headers: { "content-type": "application/json" },
-                    body: JSON.stringify(Object.fromEntries(new FormData(form).entries())),
-                  });
-                  if (!response.ok) throw new Error("Submission failed");
+                  await sendContactEnquiry(fields);
                   form.reset();
                   setContactStatus("success");
                 } catch {
