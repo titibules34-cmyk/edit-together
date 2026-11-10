@@ -28,3 +28,7 @@ use the editor.
   own key and store it in Secrets.
 - **Secrets.** Lovable manages them. Do not put secret values in the repo.
 <!-- LOVABLE:END -->
+
+## Project rules
+
+- All site pictures live on the Lovable CDN as `.asset.json` pointers (use `.url`), not as files in `public/` or bundled imports — why: each picture keeps a permanent public link that outside tools can open.
