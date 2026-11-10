@@ -1,0 +1,8 @@
+{
+  "name": "edit-together",
+  "compatibility_date": "2026-08-03",
+  "workers_dev": true,
+  "observability": {
+    "enabled": true
+  }
+}
