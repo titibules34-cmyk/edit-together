@@ -64,7 +64,14 @@ async function handleContactSubmission(request: Request, env: WorkerEnv): Promis
       }),
     });
     if (!upstream.ok) {
-      // Avoid logging form contents or provider responses containing personal data.
+      // Log only the provider's error code/name and HTTP status; never log enquiry contents.
+      const providerError = await upstream.json().catch(() => ({})) as { name?: unknown; message?: unknown; statusCode?: unknown };
+      console.error("Resend email send failed", {
+        httpStatus: upstream.status,
+        errorName: typeof providerError.name === "string" ? providerError.name : undefined,
+        errorMessage: typeof providerError.message === "string" ? providerError.message.slice(0, 300) : undefined,
+        providerStatus: typeof providerError.statusCode === "number" ? providerError.statusCode : undefined,
+      });
       return jsonResponse({ error: "We couldn't send your enquiry just now. Please email info@cyberjustice.uk directly." }, 502);
     }
     return jsonResponse({ ok: "Message sent." });
