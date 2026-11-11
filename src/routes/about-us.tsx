@@ -56,6 +56,8 @@ export const Route = createFileRoute("/about-us")({
       { name: "description", content: "Learn about Cyber Justice: evidence-led cyber intelligence, digital investigations and asset tracing." },
       { property: "og:title", content: "About Us — Cyber Justice" },
       { property: "og:description", content: "A focused approach to cyber intelligence, investigations and digital evidence." },
+      { property: "og:type", content: "website" },
+      { name: "twitter:card", content: "summary_large_image" },
     ],
   }),
   component: AboutUs,

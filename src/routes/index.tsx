@@ -222,7 +222,7 @@ function Index() {
       setHeroWordVisible(false);
       revealTimeout = setTimeout(() => {
         currentIndex = (currentIndex + 1) % rotatingWords.length;
-        setHeroWord(rotatingWords[currentIndex]);
+        setHeroWord(rotatingWords[currentIndex] ?? "Recovery");
         setHeroWordVisible(true);
       }, 250);
     }, 2600);
