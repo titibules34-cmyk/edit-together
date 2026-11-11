@@ -656,7 +656,7 @@ function Index() {
                 <Send className="h-4 w-4" aria-hidden="true" />
               </button>
               {contactStatus === "success" && <p role="status" className="text-center text-sm text-emerald-600">Thank you. Your enquiry has been sent to our team.</p>}
-              {contactStatus === "error" && <p role="alert" className="text-center text-sm text-red-500">We couldn't send your enquiry. Please email info@cyberjustice.uk directly.</p>}
+              {contactStatus === "error" && <p role="alert" className="text-center text-sm text-red-500">We couldn't send your enquiry. Please email <a href="mailto:info@cyberjustice.uk" className="font-semibold underline">info@cyberjustice.uk</a> directly.</p>}
               <p className="text-center text-xs text-muted-foreground">
                 Prefer email? Write to us directly at{" "}
                 <a href={`mailto:${CONTACT_EMAIL}`} className="font-semibold text-accent hover:underline">
