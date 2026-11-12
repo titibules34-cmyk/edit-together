@@ -14,6 +14,7 @@ import appCss from "../styles.css?url";
 import { useScrollReveal } from "../hooks/use-scroll-reveal";
 import { useWarmImageCache } from "../lib/preload-images";
 import { reportLovableError } from "../lib/lovable-error-reporting";
+import { sendChatEnquiry, validateChatLead, type ChatLead } from "../lib/contact-form";
 
 function NotFoundComponent() {
   return (
@@ -184,7 +185,7 @@ function FloatingClientReviews() {
 
 
 type CJMessage = { from: "bot" | "visitor"; text: string };
-type CJLead = { service:string; issue:string; platform:string; amount:string; timeframe:string; evidence:string; name:string; email:string; phone:string; summary:string };
+type CJLead = ChatLead;
 const emptyCJLead: CJLead = { service:"", issue:"", platform:"", amount:"", timeframe:"", evidence:"", name:"", email:"", phone:"", summary:"" };
 
 function FloatingCJBot() {
@@ -195,8 +196,23 @@ function FloatingCJBot() {
   const [choices,setChoices]=useState(["Cryptocurrency scam","Investment fraud","Wallet or account theft","Lost access to digital assets","Transaction tracing","Speak to the recovery team"]);
   const [lead,setLead]=useState<CJLead>(emptyCJLead);
   const [mailReady,setMailReady]=useState(false);
+  const [sending,setSending]=useState(false);
   const addVisitor=(text:string)=>setMessages(current=>[...current,{from:"visitor",text}]);
   const addBot=(text:string)=>setMessages(current=>[...current,{from:"bot",text}]);
+
+  const submitLead=async(finalLead:CJLead)=>{
+    const problem=validateChatLead(finalLead);
+    if(problem){addBot(problem);setStage("lead-form");return;}
+    setStage("complete"); setChoices([]); setMailReady(false); setSending(true);
+    addBot("Sending your enquiry to the Cyber Justice team… this can take up to a minute.");
+    try{
+      await sendChatEnquiry(finalLead);
+      addBot("Thank you, "+finalLead.name.trim().split(/\s+/)[0]+". Your enquiry has been sent to our team, who will reply to "+finalLead.email.trim()+". All consultations are confidential.");
+    }catch{
+      addBot("Sorry, we couldn't send your enquiry just now. Please use the button below to email it to info@cyberjustice.uk instead.");
+      setMailReady(true);
+    }finally{setSending(false);}
+  };
 
   const beginContact=()=>{
     setStage("lead-form"); setChoices([]);
@@ -283,9 +299,7 @@ function FloatingCJBot() {
       setLead(current=>({...current,phone:value.toLowerCase()==="skip"?"":value})); setStage("summary");
       addBot("Finally, please add a short summary of what happened and what help you are looking for. Do not include passwords, private keys, recovery phrases or one-time codes.");
     } else if(stage==="summary"){
-      setLead(current=>({...current,summary:value})); setStage("complete"); setChoices([]);
-      addBot("Thank you. Your enquiry details are ready. Select the button below to open an email addressed to Cyber Justice with the information you provided. This chat does not submit or store your details on its own.");
-      setMailReady(true);
+      const finalLead={...lead,summary:value}; setLead(finalLead); void submitLead(finalLead);
     } else {
       addBot("Thanks for explaining. I can provide general website information, but I can't verify transactions, access case files or determine whether assets can be recovered in this chat. Would you like to make an enquiry with the team?");
       setStage("contact-topic"); setChoices(["Asset tracing & investigations","Cryptocurrency tracing","Cyber intelligence","Cyber investigation team","General enquiry"]);
@@ -305,6 +319,7 @@ function FloatingCJBot() {
   ].join("\n");
   const mailHref="mailto:info@cyberjustice.uk?subject="+encodeURIComponent("Website enquiry — Cyber Justice")+"&body="+encodeURIComponent(mailBody);
   const resetChat=()=>{
+    if(sending)return;
     setStage("welcome");setLead(emptyCJLead);setMailReady(false);setDraft("");
     setMessages([{from:"bot",text:"Welcome back. I'm CJ Bot, your website assistant. What would you like help with?"}]);
     setChoices(["Cryptocurrency scam","Investment fraud","Wallet or account theft","Lost access to digital assets","Transaction tracing","Speak to the recovery team"]);
@@ -332,7 +347,7 @@ function FloatingCJBot() {
               </div>
             ))}
             {choices.length>0&&<div className="grid gap-1.5 pl-9 sm:gap-2">{choices.map(choice=><button key={choice} type="button" onClick={()=>handleChoice(choice)} className="group flex w-full items-center justify-between gap-2 rounded-xl border border-cyan-200/15 bg-white/[.035] px-3.5 py-2.5 text-left text-[0.78rem] font-semibold leading-snug text-cyan-100 transition hover:-translate-y-0.5 hover:border-cyan-300/50 hover:bg-cyan-300/10 hover:text-white focus:outline-none focus:ring-2 focus:ring-cyan-300/40 sm:text-[0.84rem]"><span>{choice}</span><span className="text-cyan-300/50 transition group-hover:translate-x-0.5 group-hover:text-cyan-200" aria-hidden="true">›</span></button>)}</div>}
-            {stage==="lead-form"&&<form onSubmit={event=>{event.preventDefault();setStage("complete");setMailReady(true);addBot("Thank you. Your enquiry is ready. Select “Send message” below to open your email app with the details filled in. Please review and send it to complete your request.");}} className="cjbot-msg space-y-2.5 rounded-2xl border border-cyan-200/15 bg-white/[.04] p-3.5 sm:ml-9 sm:space-y-3 sm:p-4">
+            {stage==="lead-form"&&<form onSubmit={event=>{event.preventDefault();void submitLead(lead);}} className="cjbot-msg space-y-2.5 rounded-2xl border border-cyan-200/15 bg-white/[.04] p-3.5 sm:ml-9 sm:space-y-3 sm:p-4">
               <p className="text-sm leading-relaxed text-blue-50/90">📩 Great! Please fill out the form below and our team will get back to you within 24 hours. All consultations are confidential.</p>
               <input required value={lead.name} onChange={event=>setLead(current=>({...current,name:event.target.value}))} placeholder="Your name" aria-label="Your name" className={inputCls}/>
               <input required type="email" value={lead.email} onChange={event=>setLead(current=>({...current,email:event.target.value}))} placeholder="Email address" aria-label="Email address" className={inputCls}/>
@@ -341,7 +356,8 @@ function FloatingCJBot() {
               <p className="text-[0.68rem] leading-relaxed text-blue-200/60">Enquiry topic: <span className="font-semibold text-cyan-200">{lead.service}</span>. Please do not include passwords, private keys, recovery phrases or one-time codes.</p>
               <button type="submit" className="flex w-full items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-cyan-500 to-blue-600 px-4 py-3.5 text-sm font-bold text-white shadow-[0_10px_30px_-8px_rgba(34,211,238,.5)] transition hover:brightness-110">➤ Send Message</button>
             </form>}
-            {mailReady&&<div className="cjbot-msg rounded-2xl border border-emerald-300/25 bg-emerald-400/10 p-3.5 sm:ml-9"><p className="text-xs leading-relaxed text-emerald-100">Your email app will open with the enquiry details filled in. Please review and send it to complete your request.</p><a href={mailHref} className="mt-3 inline-flex w-full items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-emerald-500 to-teal-600 px-4 py-3 text-sm font-bold text-white transition hover:brightness-110">Open enquiry email <span aria-hidden="true">↗</span></a></div>}
+            {sending&&<div className="cjbot-msg flex items-center gap-2 pl-9 text-xs text-cyan-200/80" role="status"><span className="h-3 w-3 animate-spin rounded-full border-2 border-cyan-300/30 border-t-cyan-300"/>Sending…</div>}
+            {mailReady&&<div className="cjbot-msg rounded-2xl border border-emerald-300/25 bg-emerald-400/10 p-3.5 sm:ml-9"><p className="text-xs leading-relaxed text-emerald-100">Your email app will open with the enquiry details filled in. Please review and send it.</p><a href={mailHref} className="mt-3 inline-flex w-full items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-emerald-500 to-teal-600 px-4 py-3 text-sm font-bold text-white transition hover:brightness-110">Open enquiry email <span aria-hidden="true">↗</span></a></div>}
           </div>
           {stage!=="lead-form"&&stage!=="complete"&&<form onSubmit={event=>{event.preventDefault();sendMessage();}} className="shrink-0 border-t border-cyan-200/10 bg-[#050f24]/80 p-2.5 sm:p-3">
             <div className="flex items-center gap-2 rounded-full border border-cyan-200/15 bg-white/[.05] p-1.5 pl-4 transition focus-within:border-cyan-300/50 focus-within:ring-2 focus-within:ring-cyan-300/15">
