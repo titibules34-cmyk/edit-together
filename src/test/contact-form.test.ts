@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { buildFormSubmitPayload, FORMSUBMIT_ENDPOINT, isSpam, readContactFields, validateContact } from "@/lib/contact-form";
+import { buildChatPayload, buildFormSubmitPayload, FORMSUBMIT_ENDPOINT, isSpam, readContactFields, validateChatLead, validateContact } from "@/lib/contact-form";
 
 const fd = (entries: Record<string, string>) => {
   const f = new FormData();
@@ -27,5 +27,26 @@ describe("contact form", () => {
   it("treats a filled hidden field as spam", () => {
     expect(isSpam(readContactFields(fd({ website: "bot.com" })))).toBe(true);
     expect(isSpam(readContactFields(fd({})))).toBe(false);
+  });
+});
+
+describe("CJ Bot enquiries", () => {
+  const lead = {
+    service: "Cryptocurrency scam", issue: "Fake exchange", platform: "Not sure", amount: "Prefer not to say",
+    timeframe: "Within the last week", evidence: "No, not yet", name: "Jo Bloggs", email: "jo@example.com", phone: "", summary: "Help",
+  };
+
+  it("sends chat enquiries with the visitor's email as reply-to and the service in the subject", () => {
+    const payload = buildChatPayload(lead);
+    expect(payload._replyto).toBe("jo@example.com");
+    expect(payload._subject).toBe("CJ Bot enquiry: Cryptocurrency scam");
+    expect(payload.phone).toBe("Not provided");
+  });
+
+  it("requires a name, valid email and summary before sending", () => {
+    expect(validateChatLead(lead)).toBeNull();
+    expect(validateChatLead({ ...lead, email: "nope" })).not.toBeNull();
+    expect(validateChatLead({ ...lead, summary: " " })).not.toBeNull();
+    expect(validateChatLead({ ...lead, name: "" })).not.toBeNull();
   });
 });
