@@ -54,14 +54,66 @@ export function buildFormSubmitPayload(fields: ContactFields) {
   };
 }
 
-export async function sendContactEnquiry(fields: ContactFields): Promise<void> {
+async function postToFormSubmit(payload: Record<string, string>): Promise<void> {
   const response = await fetch(FORMSUBMIT_ENDPOINT, {
     method: "POST",
     headers: { "content-type": "application/json", accept: "application/json" },
-    body: JSON.stringify(buildFormSubmitPayload(fields)),
+    body: JSON.stringify(payload),
   });
   const result = (await response.json().catch(() => ({}))) as { success?: unknown };
   if (!response.ok || String(result.success) !== "true") {
     throw new Error("Submission failed");
   }
+}
+
+export async function sendContactEnquiry(fields: ContactFields): Promise<void> {
+  await postToFormSubmit(buildFormSubmitPayload(fields));
+}
+
+// Enquiries collected by the CJ Bot chat assistant.
+export type ChatLead = {
+  service: string;
+  issue: string;
+  platform: string;
+  amount: string;
+  timeframe: string;
+  evidence: string;
+  name: string;
+  email: string;
+  phone: string;
+  summary: string;
+};
+
+export function validateChatLead(lead: ChatLead): string | null {
+  if (!lead.name.trim() || !lead.summary.trim() || !EMAIL_RE.test(lead.email.trim())) {
+    return "Please provide your name, a valid email address and a short summary.";
+  }
+  return null;
+}
+
+export function buildChatPayload(lead: ChatLead) {
+  const clip = (value: string, max: number, fallback: string) => value.trim().slice(0, max) || fallback;
+  const service = clip(lead.service, 160, "General enquiry");
+  const email = lead.email.trim().slice(0, 254);
+  return {
+    name: clip(lead.name, 120, ""),
+    email,
+    phone: clip(lead.phone, 80, "Not provided"),
+    service,
+    situation: clip(lead.issue, 200, "Not specified"),
+    "platform / organisation": clip(lead.platform, 200, "Not specified"),
+    "approximate value": clip(lead.amount, 80, "Not specified"),
+    timeframe: clip(lead.timeframe, 80, "Not specified"),
+    "supporting records": clip(lead.evidence, 120, "Not specified"),
+    message: clip(lead.summary, 6000, ""),
+    source: "CJ Bot website assistant",
+    _subject: `CJ Bot enquiry: ${service}`,
+    _replyto: email,
+    _template: "table",
+    _captcha: "false",
+  };
+}
+
+export async function sendChatEnquiry(lead: ChatLead): Promise<void> {
+  await postToFormSubmit(buildChatPayload(lead));
 }
