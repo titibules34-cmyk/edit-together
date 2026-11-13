@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { createFileRoute, Link } from "@tanstack/react-router";
+import { SiteFooter } from "@/components/SiteFooter";
 const certAcfeCfe = "/images/certs/acfe-cfe.png";
 const certTali = "/images/certs/tali.png";
 const certCyberExpert = "/images/certs/cyber-expert.png";

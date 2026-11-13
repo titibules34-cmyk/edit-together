@@ -3,6 +3,7 @@ const cryptoTracingImg = "/images/crypto-tracing.png";
 import { HeroPicture } from "@/components/HeroPicture";
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { BrandLogo } from "@/components/BrandLogo";
+import { SiteFooter } from "@/components/SiteFooter";
 
 export const Route = createFileRoute("/asset-recovery")({
   head: () => ({
