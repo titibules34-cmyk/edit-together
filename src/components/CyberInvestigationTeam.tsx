@@ -123,8 +123,8 @@ export function CyberInvestigationTeam() {
         </div>
       </section>
 
-      <footer className="py-8 text-center text-xs text-muted-foreground">
-        <p>© {new Date().getFullYear()} Cyber Justice · No recovery outcome is guaranteed · Not legal or financial advice.</p>
+      <footer>
+        <SiteFooter />
       </footer>
     </main>
   );
