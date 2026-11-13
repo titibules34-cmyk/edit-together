@@ -3,6 +3,7 @@ const cryptoTracingImg = "/images/crypto-tracing.png";
 import { HeroPicture } from "@/components/HeroPicture";
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { BrandLogo } from "@/components/BrandLogo";
+import { SiteFooter } from "@/components/SiteFooter";
 
 export const Route = createFileRoute("/asset-recovery")({
   head: () => ({
@@ -99,8 +100,8 @@ function AssetRecovery() {
         </div>
       </section>
 
-      <footer className="py-8 text-center text-xs text-muted-foreground">
-        <p>© {new Date().getFullYear()} Cyber Justice · No recovery outcome is guaranteed · Not legal or financial advice.</p>
+      <footer>
+        <SiteFooter />
       </footer>
     </main>
   );

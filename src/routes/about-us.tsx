@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { createFileRoute, Link } from "@tanstack/react-router";
+import { SiteFooter } from "@/components/SiteFooter";
 const certAcfeCfe = "/images/certs/acfe-cfe.png";
 const certTali = "/images/certs/tali.png";
 const certCyberExpert = "/images/certs/cyber-expert.png";
@@ -368,8 +369,8 @@ function AboutUs() {
             </a>
           </div>
         </div>
-        <div className="mt-8 border-t border-blue-200/10 py-5 text-center text-[.68rem] text-blue-100/65">
-          © {new Date().getFullYear()} Cyber Justice Ltd · No recovery outcome is guaranteed · Not legal or financial advice.
+        <div className="mt-8">
+          <SiteFooter />
         </div>
       </footer>
     </main>

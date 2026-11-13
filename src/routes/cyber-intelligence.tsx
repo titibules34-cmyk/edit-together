@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { Globe, UserSearch, Bitcoin, FileSearch, Landmark, ShieldCheck, Coins, Scale, Earth, Gavel, Wallet, Search, BadgeCheck, type LucideIcon } from "lucide-react";
 import { BrandLogo } from "@/components/BrandLogo";
+import { SiteFooter } from "@/components/SiteFooter";
 
 export const Route = createFileRoute("/cyber-intelligence")({
   head: () => ({
@@ -141,8 +142,8 @@ function IntelligenceServices() {
         </div>
       </section>
 
-      <footer className="py-8 text-center text-xs text-muted-foreground">
-        <p>© {new Date().getFullYear()} Cyber Justice · No recovery outcome is guaranteed · Not legal or financial advice.</p>
+      <footer>
+        <SiteFooter />
       </footer>
     </main>
   );

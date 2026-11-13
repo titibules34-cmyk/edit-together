@@ -2,6 +2,7 @@ import { HeroPicture } from "@/components/HeroPicture";
 import { Link } from "@tanstack/react-router";
 import { Bitcoin, Blocks, ChartNoAxesCombined, Search, ShieldCheck, Wallet } from "lucide-react";
 import { BrandLogo } from "@/components/BrandLogo";
+import { SiteFooter } from "@/components/SiteFooter";
 
 const features = [
   { icon: Bitcoin, title: "Not all Cryptos are Equal", text: "Most Cryptocurrencies are traceable, however, not all. We are able to trace the most popular Cryptocurrencies, including Bitcoin and Ethereum, as well as others." },
@@ -109,7 +110,7 @@ export function CryptocurrencyTracing() {
         </div>
       </section>
 
-      <footer className="py-8 text-center text-xs text-muted-foreground"><p>© {new Date().getFullYear()} Cyber Justice · No recovery outcome is guaranteed · Not legal or financial advice.</p></footer>
+      <footer><SiteFooter /></footer>
     </main>
   );
 }
