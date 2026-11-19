@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { SiteFooter } from "@/components/SiteFooter";
+import { OFFICES } from "@/lib/offices";
 const certAcfeCfe = "/images/certs/acfe-cfe.png";
 const certTali = "/images/certs/tali.png";
 const certCyberExpert = "/images/certs/cyber-expert.png";
@@ -337,6 +338,9 @@ function AboutUs() {
               Cyber intelligence, digital investigations and asset recovery intelligence — bringing clarity to complex digital matters.
             </p>
             <p className="mt-4 text-xs leading-5 text-blue-100/65">Cyber Justice Ltd · Company No. 16458332 · United Kingdom</p>
+            {OFFICES.map((office) => (
+              <p key={office.address} className="mt-1 text-xs leading-5 text-blue-100/65">{office.role} · {office.address}</p>
+            ))}
           </div>
           <nav aria-label="Quick links">
             <p className="text-[.68rem] font-bold tracking-[.2em] text-cyan-200">QUICK LINKS</p>

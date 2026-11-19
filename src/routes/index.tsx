@@ -8,6 +8,7 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import { HeroPicture } from "@/components/HeroPicture";
 import { SiteFooter } from "@/components/SiteFooter";
 import { isSpam, readContactFields, sendContactEnquiry, validateContact } from "@/lib/contact-form";
+import { OFFICES } from "@/lib/offices";
 import { Globe, Users, Monitor, DollarSign, Code2, BarChart3, MapPin, Lock, ShieldCheck, ArrowRight, Phone, Clock, Send, ChevronDown, Menu, X } from "lucide-react";
 const certAcfeCfe = "/images/certs/acfe-cfe.png";
 const certTali = "/images/certs/tali.png";
@@ -528,9 +529,11 @@ function Index() {
                 <span className="h-1.5 w-1.5 rounded-full bg-accent" aria-hidden="true" />
                 Active Operational Headquarters
               </span>
-              <span className="rounded-full border border-border bg-secondary px-3 py-1 text-xs font-bold tracking-wide text-muted-foreground">
-                United Kingdom
-              </span>
+              {OFFICES.map((office) => (
+                <span key={office.country} className="rounded-full border border-border bg-secondary px-3 py-1 text-xs font-bold tracking-wide text-muted-foreground">
+                  {office.country}
+                </span>
+              ))}
             </div>
             <div>
               <h3 className="text-2xl font-extrabold">Cyber Justice Ltd</h3>
@@ -540,17 +543,17 @@ function Index() {
                 London, United Kingdom
               </p>
             </div>
-            <div className="flex items-start gap-4 rounded-xl border border-border bg-background/60 p-5">
-              <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-primary/10 text-accent">
-                <MapPin className="h-5 w-5" aria-hidden="true" />
-              </span>
-              <div>
-                <p className="text-xs font-bold tracking-widest text-muted-foreground">Official Registered Address</p>
-                <p className="mt-1 text-sm font-semibold leading-relaxed">
-                  Unit A1008, 4-6 Greatorex Street, London, United Kingdom, E1 5NF
-                </p>
+            {OFFICES.map((office) => (
+              <div key={office.address} className="flex items-start gap-4 rounded-xl border border-border bg-background/60 p-5">
+                <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-primary/10 text-accent">
+                  <MapPin className="h-5 w-5" aria-hidden="true" />
+                </span>
+                <div>
+                  <p className="text-xs font-bold tracking-widest text-muted-foreground">{office.role}</p>
+                  <p className="mt-1 text-sm font-semibold leading-relaxed">{office.address}</p>
+                </div>
               </div>
-            </div>
+            ))}
             <dl className="mt-auto divide-y divide-border border-t border-border text-sm">
               {companyFacts.map(([label, value]) => (
                 <div key={label} className="flex items-center justify-between gap-4 py-3">
@@ -710,12 +713,15 @@ function Index() {
               Boutique Cyber Intelligence &amp; Digital Asset Tracing group providing actionable
               evidence to law firms, investigators, and institutions worldwide.
             </p>
-            <div className="mt-5 flex items-start gap-3 rounded-xl border border-border bg-background/60 p-4">
-              <span className="rounded-md bg-primary/10 px-2 py-1 text-xs font-bold text-accent">UK</span>
-              <p className="text-xs leading-relaxed text-muted-foreground">
-                Cyber Justice Ltd · Co. No. 16458332 · Unit A1008, 4-6 Greatorex Street, London,
-                United Kingdom, E1 5NF
-              </p>
+            <div className="mt-5 flex flex-col gap-3">
+              {OFFICES.map((office) => (
+                <div key={office.address} className="flex items-start gap-3 rounded-xl border border-border bg-background/60 p-4">
+                  <span className="rounded-md bg-primary/10 px-2 py-1 text-xs font-bold text-accent">{office.badge}</span>
+                  <p className="text-xs leading-relaxed text-muted-foreground">
+                    Cyber Justice Ltd · Co. No. 16458332 · {office.address}
+                  </p>
+                </div>
+              ))}
             </div>
             <a
               href={`mailto:${CONTACT_EMAIL}`}

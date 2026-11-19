@@ -11,3 +11,4 @@
 - [x] Lady Justice photo: separate phone (tall) and desktop framing
 - [x] Phone layout polish across all pages, incl. working Services menu on phones
 - [x] Phone: ☰ menu with About Us and Services; Home top text centred
+- [x] Office locations: add Fredericton, Canada office everywhere locations show
